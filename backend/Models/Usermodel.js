@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    Email: {
+    email: {
       type: String,
       required: true,
       unique: true,
@@ -17,11 +17,11 @@ const UserSchema = new mongoose.Schema(
       select: false,
     },
     verified: {
-      type: String,
+      type: Boolean,
       default: false,
     },
     verificationToken: String,
-    adresses: [
+    addresses: [
       {
         name: String,
         mobileNo: String,
@@ -44,4 +44,5 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
 module.exports = mongoose.model("User-native", UserSchema);

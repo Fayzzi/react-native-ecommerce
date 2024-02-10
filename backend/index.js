@@ -24,3 +24,6 @@ mongoose.connect(process.env.MONGOOSE).then((data) => {
 app.listen(process.env.PORT, () => {
   console.log("listening on:" + process.env.PORT);
 });
+//routes
+const userRoutes = require("./Routes/UserRoutes");
+app.use("/api/v2/user", userRoutes);

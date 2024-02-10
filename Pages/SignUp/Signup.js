@@ -7,13 +7,16 @@ import {
   TextInput,
   Dimensions,
   Pressable,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import logo from "./../../assets/logo.png"; // Assuming logo.png is in the correct location
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from "axios";
+axios.defaults.baseURL = "http://192.168.1.136:8000";
+axios.defaults.withCredentials = true;
 const Signup = () => {
   const [email, setemail] = useState("");
   const [Password, setPassword] = useState("");
@@ -21,6 +24,25 @@ const Signup = () => {
   const [conform, setconform] = useState("");
 
   const navigation = useNavigation();
+  const handleVerification = () => {
+    const userData = {
+      email: email,
+      name: Name,
+      password: Password,
+    };
+    axios
+      .post("/api/v2/user/register", userData)
+      .then((response) => {
+        if (response.data.success == true) {
+          Alert.alert("Success", response.data.message);
+        } else {
+          Alert.alert("Error", response.data.message);
+        }
+      })
+      .catch((error) => {
+        Alert.alert("Error", "An Error has occurred please try again later!!");
+      });
+  };
   return (
     <SafeAreaView
       style={{
@@ -134,6 +156,7 @@ const Signup = () => {
           }}
         >
           <Pressable
+            onPress={handleVerification}
             style={{
               backgroundColor: "#FEBE10",
               alignItems: "center",
