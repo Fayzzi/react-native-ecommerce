@@ -3,6 +3,7 @@ const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
+const errormiddleware = require("./utils/error");
 require("dotenv").config();
 const app = express();
 const port = 8000;
@@ -14,6 +15,7 @@ app.use(
     extended: false,
   })
 );
+app.use(errormiddleware);
 app.use(bodyparser.json());
 const jwt = require("jsonwebtoken");
 mongoose.connect(process.env.MONGOOSE).then((data) => {
